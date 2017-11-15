@@ -608,7 +608,9 @@
 
         // Attempts to match a date to the rules
         Recur.prototype.matches = function(dateToMatch, ignoreStartEnd) {
-            var date = moment(dateToMatch).dateOnly();
+            
+            //var date = moment(dateToMatch).dateOnly(); // create weird behavior when recurence is not set to day. seems to be due to difference in times
+            var date = moment(dateToMatch);//.dateOnly();
 
             if (!date.isValid()) {
                 throw Error("Invalid date supplied to match method: " + dateToMatch);
