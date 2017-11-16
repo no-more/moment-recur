@@ -316,7 +316,7 @@
                     date = format ? currentDate.format(format) : currentDate.clone();
                     dates.push(date);
                 }
-                if(currentDate >= this.end) {
+                if(type === "all" && currentDate >= this.end) {
                     break;
                 }
             }
@@ -608,9 +608,7 @@
 
         // Attempts to match a date to the rules
         Recur.prototype.matches = function(dateToMatch, ignoreStartEnd) {
-            
-            //var date = moment(dateToMatch).dateOnly(); // create weird behavior when recurence is not set to day. seems to be due to difference in times
-            var date = moment(dateToMatch);//.dateOnly();
+            var date = moment(dateToMatch).dateOnly();
 
             if (!date.isValid()) {
                 throw Error("Invalid date supplied to match method: " + dateToMatch);
@@ -718,11 +716,12 @@
 
     // Plugin for removing all time information from a given date
     moment.fn.dateOnly = function() {
-        if (this.tz && typeof(moment.tz) == 'function') {
-            return moment.tz(this.format('YYYY-MM-DD[T]00:00:00Z'), 'UTC');
-        } else {
-            return this.hours(0).minutes(0).seconds(0).milliseconds(0).add(this.utcOffset(), "minute").utcOffset(0);
-        }
+        return this.startOf("day");
+        // if (this.tz && typeof(moment.tz) == 'function') {
+        //     return moment.tz(this.format('YYYY-MM-DDT00:00:00.000Z'), 'UTC');
+        // } else {
+        //     return this.hours(0).minutes(0).seconds(0).milliseconds(0).add(this.utcOffset(), "minute").utcOffset(0);
+        // }
     };
 
     return moment;
