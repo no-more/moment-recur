@@ -309,6 +309,9 @@
                     currentDate.subtract(1, "day");
                 }
 
+                if(currentDate.isAfter(this.end)) {
+                    break;
+                }
                 //console.log("Match: " + currentDate.format("L") + " - " + this.matches(currentDate, true));
 
                 // Don't match outside the date if generating all dates within start/end
@@ -316,9 +319,9 @@
                     date = format ? currentDate.format(format) : currentDate.clone();
                     dates.push(date);
                 }
-                if(type === "all" && currentDate >= this.end) {
-                    break;
-                }
+                // if(type === "all" && currentDate >= this.end) {
+                //     break;
+                // }
             }
 
             return dates;
